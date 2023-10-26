@@ -1,2 +1,2 @@
 # MAI
-# Something for Moscow Aviation Institute
+Something for Moscow Aviation Institute
