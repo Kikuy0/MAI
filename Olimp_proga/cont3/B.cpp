@@ -11,14 +11,15 @@ int main() {
   ll n, g;
   cin >> n >> g;
   vector<ll> a(n);
+  vector<ll> s_a = a;
   for (int i = 0; i < n; ++i) {
     cin >> a[i];
   }
-  sort(all(a));
+  sort(all(s_a));
   bool fl = true;
   for (int i = 0; i < n; ++i) {
-    if (g > a[i]) {
-      g += a[i];
+    if (g > s_a[i]) {
+      g += s_a[i];
     } else {
       fl = false;
       break;
@@ -27,8 +28,12 @@ int main() {
   if (fl) {
     cout << "YES"
          << "\n";
-    for (ll elem : a) {
-      cout << elem << " ";
+    for (int k = 0; k < n; ++k) {
+      for (int i = 0; i < n; ++i) {
+        if (s_a[i] == a[k]) {
+          cout << k + 1 << " ";
+        }
+      }
     }
   } else {
     cout << "NO"
