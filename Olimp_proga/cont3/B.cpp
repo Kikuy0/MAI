@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
+#include <utility>
 #include <vector>
 #define all(x) x.begin(), x.end()
 
@@ -8,18 +9,20 @@ using namespace std;
 using ll = long long;
 
 int main() {
+  ios::sync_with_stdio(false);
+  cin.tie(0);
   ll n, g;
   cin >> n >> g;
-  vector<ll> a(n);
-  vector<ll> s_a = a;
+  vector<pair<ll, ll>> a(n);
   for (int i = 0; i < n; ++i) {
-    cin >> a[i];
+    cin >> a[i].first;
+    a[i].second = i + 1;
   }
-  sort(all(s_a));
+  sort(all(a));
   bool fl = true;
   for (int i = 0; i < n; ++i) {
-    if (g > s_a[i]) {
-      g += s_a[i];
+    if (g > a[i].first) {
+      g += a[i].first;
     } else {
       fl = false;
       break;
@@ -28,16 +31,11 @@ int main() {
   if (fl) {
     cout << "YES"
          << "\n";
-    for (int k = 0; k < n; ++k) {
-      for (int i = 0; i < n; ++i) {
-        if (s_a[i] == a[k]) {
-          cout << k + 1 << " ";
-        }
-      }
+    for (int i = 0; i < n; ++i) {
+      cout << a[i].second << " ";
     }
   } else {
-    cout << "NO"
-         << "\n";
+    cout << "NO";
   }
   cout << endl;
 }
