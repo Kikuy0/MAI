@@ -6,13 +6,13 @@ using ll = long long;
 int main() {
   ll n, a, b;
   cin >> n >> a >> b;
-  ll left = 0, right = n / (min(a, b));
+  ll left = 0, right = (n * (max(a, b)));
   while (left < right) {
-    ll mid = (left + right) / 2;
-    if (((mid / a) + (mid / b) + 1) >= n) {
-      right = mid;
+    ll t = ((left + right) / 2);
+    if (((t / a) + (t / b) + 1) >= n) {
+      right = t + 1;
     } else {
-      left = mid;
+      left = t;
     }
   }
   cout << left + min(a, b) << "\n";
