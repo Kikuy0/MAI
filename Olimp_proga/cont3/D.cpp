@@ -4,17 +4,18 @@ using namespace std;
 using ll = long long;
 
 int main() {
-  ll n, a, b;
-  cin >> n >> a >> b;
-  ll left = 0, right = (n * (max(a, b)));
-  while (left < right) {
-    ll t = ((left + right) / 2);
-    if (((t / a) + (t / b) + 1) >= n) {
-      right = t + 1;
+  ll n;
+  int a, b;
+  cin >> n >> a >> b;          // 3 1 1
+  ll l = 0, r = (n * (a + b)); // l = 0 r = 6
+  while (l < r) {
+    ll t = (l + r) / 2; // t = 1
+    // cout << l << r << t; -- debug
+    if (((t / a) + (t / b)) >= (n - 1)) { //
+      r = t;                              //  r = 1
     } else {
-      left = t;
+      l = t + 1; // = 0
     }
   }
-  cout << left + min(a, b) << "\n";
+  cout << l + min(a, b) << endl;
 }
-// 1 2 3 4 5 6 7
