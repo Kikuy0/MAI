@@ -1,22 +1,43 @@
 #include <iostream>
+#include <vector>
 
 int main() {
-  long long N, a, b;
-  std::cin >> N >> a >> b;
+  int N;
+  std::cin >> N;
 
-  long long left = 1;
-  long long right = N / (a + b) + 1;
+  std::vector<int> permutation(N);
+  std::vector<bool> remembered(N, false);
 
-  while (left < right) {
-    long long mid = (left + right) / 2;
-    if (mid * a + mid * b >= N) {
-      right = mid;
-    } else {
-      left = mid + 1;
+  for (int i = 0; i < N; ++i) {
+    std::cin >> permutation[i];
+    if (permutation[i] > 0) {
+      remembered[permutation[i] - 1] = true;
     }
   }
 
-  std::cout << left << std::endl;
+  int next_value = 1;
+  for (int i = 0; i < N; ++i) {
+    if (permutation[i] == 0) {
+      while (remembered[next_value - 1]) {
+        next_value++;
+      }
+      permutation[i] = next_value;
+      remembered[next_value - 1] = true;
+    }
+  }
+
+  // Проверка на точную ошибку
+  for (int i = 0; i < N; ++i) {
+    if (permutation[i] == i + 1) {
+      std::cout << "1\n";
+      return 0;
+    }
+  }
+
+  for (int i = 0; i < N; ++i) {
+    std::cout << permutation[i] << " ";
+  }
+  std::cout << std::endl;
 
   return 0;
 }
