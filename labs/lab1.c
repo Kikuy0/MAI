@@ -10,9 +10,10 @@ int fac(int x) {
 }
 
 float byAccuracy(float x, float acc) {
-  float ans = 0;
+  float ans = 0, facc = 10;
   int i = 1;
-  while (ans < acc) {
+  while (facc > acc) {
+    facc = ((pow(x, 2 * i)) / fac(2 * i));
     ans += pow((-1), i) * ((pow(x, 2 * i)) / fac(2 * i));
     ++i;
   }
@@ -28,9 +29,20 @@ float byQuantity(float x, int n) {
 }
 
 int main(void) {
-  float x;
-  int n, k;
-  scanf("%f%d", &x, &n);
-  printf("%f\n", byQuantity(x, n));
+  int k, n;
+  float x, acc;
+  printf("Chose:\n1.By quantity\n2.By accuracy\n");
+  scanf("%d", &k);
+  switch (k) {
+  case 1:
+    scanf("%f%d", &x, &n);
+    printf("%f\n", byQuantity(x, n));
+    break;
+  case 2:
+    scanf("%f%f", &x, &acc);
+    printf("%f", byAccuracy(x, acc));
+    break;
+  }
+
   // printf("%d\n", fac(k)); debug func(fac)
 }
