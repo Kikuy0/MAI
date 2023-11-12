@@ -3,14 +3,12 @@
 
 float Task1(float arr[], int k, float y) {
   float ans = -1;
-  int pos;
   for (int i = 0; i < k; ++i) {
     if ((ans < arr[i]) && (arr[i] < y)) {
       ans = arr[i];
-      pos = i;
     }
   }
-  return pos;
+  return ans;
 }
 
 int MaxValuePos(float arr[], int k) {
@@ -37,10 +35,13 @@ int MinValuePos(float arr[], int k) {
 
 float Task2(float arr[], int st, int end) {
   float ans, sum = 0;
-  for (int i = st + 1; i < end; ++i) {
+  int count = 0;
+  for (int i = st; i < end; ++i) {
     sum += arr[i];
+    count++;
+    // printf("%f %d \n", sum, count); - debug
   }
-  return sum / (end - st - 1);
+  return sum / count;
 }
 
 int main() {
