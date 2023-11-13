@@ -46,7 +46,7 @@ static float Task(int **matrix, int rows, int cols, int average) {
         count++;
       }
     }
-    printf("%d %d\n", sum, count);
+    // printf("%d %d\n", sum, count); - debug
     if (count > saveCount) {
       saveSum = sum;
       saveCount = count;
@@ -63,18 +63,15 @@ static float Task(int **matrix, int rows, int cols, int average) {
 
 int main() {
   int rows, cols, MAverage;
-
   printf("Enter number of rows: ");
   scanf("%d", &rows);
-
   printf("Enter number of columns: ");
   scanf("%d", &cols);
-
   int **matrix = createMatrix(rows, cols);
   fillMatrix(matrix, rows, cols);
   ViewMatrix(matrix, rows, cols);
   MAverage = MatrixAverage(matrix, rows, cols);
-  printf("%d\n", MAverage);
+  // printf("%d\n", MAverage); - debug
   printf("Task answer - %f\n", Task(matrix, rows, cols, MAverage));
   return 0;
 }
