@@ -14,12 +14,12 @@ void make_file() {
     exit(0);
   }
 
-  printf("Enter strings to add to the file. Enter 'stop' to stop.\n");
+  printf("Введите строки для заполнения файла. Введите '.' для остановки.\n");
 
   while (1) {
     fgets(input, 100, stdin);
 
-    if (strcmp(input, "stop\n") == 0) {
+    if (strcmp(input, ".\n") == 0) {
       break;
     }
 

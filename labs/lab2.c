@@ -45,9 +45,9 @@ float Task2(float arr[], int st, int end) {
 }
 
 int main() {
-  int k;
-  float x, y;
-  scanf("%d%f", &k, &y);
+  int k, x, y;
+  printf("Введите k, X, Y через пробел:");
+  scanf("%i %i %i", &k, &x, &y);
   float arr[k];
   for (int i = 0; i < k; ++i) {
     scanf("%f", &arr[i]);

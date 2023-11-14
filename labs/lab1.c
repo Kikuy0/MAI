@@ -9,8 +9,8 @@ int fac(int x) {
   return ans;
 }
 
-float byAccuracy(float x, float acc) {
-  float ans = 0, facc = 10;
+static double byAccuracy(float x, float acc) {
+  double ans = 0, facc = 10000000;
   int i = 1;
   while (facc > acc) {
     facc = ((pow(x, 2 * i)) / fac(2 * i));
@@ -20,7 +20,7 @@ float byAccuracy(float x, float acc) {
   return ans;
 }
 
-float byQuantity(float x, int n) {
+static double byQuantity(float x, int n) {
   float ans = 0;
   for (int i = 0; i < n; ++i) {
     ans += pow((-1), i) * ((pow(x, 2 * i)) / fac(2 * i));
@@ -30,17 +30,17 @@ float byQuantity(float x, int n) {
 
 int main(void) {
   int k, n;
-  float x, acc;
-  printf("Chose:\n1.By quantity\n2.By accuracy\n");
+  double x, acc;
+  printf("Chose:\n1.По числу членов;\n2.С заданной точностью\n");
   scanf("%d", &k);
   switch (k) {
   case 1:
-    scanf("%f%d", &x, &n);
+    scanf("%lf%d", &x, &n);
     printf("%f\n", byQuantity(x, n));
     break;
   case 2:
-    scanf("%f%f", &x, &acc);
-    printf("%f", byAccuracy(x, acc));
+    scanf("%lf%lf", &x, &acc);
+    printf("%lf", byAccuracy(x, acc));
     break;
   }
 

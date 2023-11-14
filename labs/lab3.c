@@ -13,6 +13,7 @@ static int **createMatrix(int rows, int cols) {
 void fillMatrix(int **matrix, int rows, int cols) {
   for (int i = 0; i < rows; i++) {
     for (int j = 0; j < cols; j++) {
+      printf("Введите элемент %i строки %i столбца\n", i, j);
       scanf("%d", &matrix[i][j]);
     }
   }
@@ -63,15 +64,15 @@ static float Task(int **matrix, int rows, int cols, int average) {
 
 int main() {
   int rows, cols, MAverage;
-  printf("Enter number of rows: ");
+  printf("Введите число строк: ");
   scanf("%d", &rows);
-  printf("Enter number of columns: ");
+  printf("Введите число столбцов: ");
   scanf("%d", &cols);
   int **matrix = createMatrix(rows, cols);
   fillMatrix(matrix, rows, cols);
   ViewMatrix(matrix, rows, cols);
   MAverage = MatrixAverage(matrix, rows, cols);
   // printf("%d\n", MAverage); - debug
-  printf("Task answer - %f\n", Task(matrix, rows, cols, MAverage));
+  printf("Ответ на задачу - %f\n", Task(matrix, rows, cols, MAverage));
   return 0;
 }
