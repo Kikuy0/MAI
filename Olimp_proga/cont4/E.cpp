@@ -16,11 +16,11 @@ int main(void) {
     save = ai;
     // cout << save << "\n"; // debug
     ai = save * 5 % m;
-    if (ai >= m1) {
+    if (ai > m1) {
       m2 = m1;
       m1 = ai;
     }
-    if (m1 > ai >= m2) {
+    if (m1 > ai > m2) {
       m2 = ai;
     }
   }
