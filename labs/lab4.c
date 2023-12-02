@@ -7,7 +7,7 @@ int cmpfunc(const void *a, const void *b) {
 }
 
 int main() {
-  char str[] = "";
+  char str[330];
   scanf("%s", str);
   char *words[30];
   int i = 0, j = 0;
