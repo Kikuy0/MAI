@@ -8,11 +8,13 @@
 /*
  * записывает поля структуры в файл
  */
-void serialize(FILE* file, const struct database* db);
+void serialize(FILE *file, const struct database *db);
 
 /*
  * считывает структуру из файла
  */
-void deserialize(FILE* file, struct database* db);
+void deserialize(FILE *file, struct database *db);
+
+void NotSave(FILE *file, const struct database *db);
 
 #endif
