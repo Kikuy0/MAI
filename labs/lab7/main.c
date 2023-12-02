@@ -219,7 +219,7 @@ int main() {
       goto exit;
     }
     case 8: {
-      DB_NotSave(db);
+
       goto exit;
     }
     default:

@@ -97,7 +97,4 @@ void DB_Save(struct database *db);
  * устанавливает файл для сохранения
  */
 void DB_SetFile(struct database *db, const char *file);
-
-void DB_NotSave(struct database *db);
-
 #endif

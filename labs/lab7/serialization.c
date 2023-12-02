@@ -10,23 +10,6 @@ void serialize(FILE *file, const struct database *db) {
     fwrite(db->rows[i], sizeof(struct row_t), 1, file);
   }
 }
-void NotSave(FILE *file, const struct database *db) {
-  rewind(file);
-
-  // Сохраняем размер и емкость
-  fwrite(&db->size, sizeof(uint64_t), 1, file);
-  fwrite(&db->capacity, sizeof(uint64_t), 1, file);
-
-  // Сохраняем каждую структуру row_t
-  for (size_t i = 0; i < db->size; i++) {
-    fwrite(*(db->rows + i), sizeof(struct row_t), 1, file);
-  }
-
-  // Сбрасываем буфер и перемещаем указатель в начало
-  fflush(file);
-  rewind(file);
-}
-
 void deserialize(FILE *file, struct database *db) {
   uint64_t size = 0;
   uint64_t capacity = 0;

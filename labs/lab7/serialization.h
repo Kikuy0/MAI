@@ -15,6 +15,4 @@ void serialize(FILE *file, const struct database *db);
  */
 void deserialize(FILE *file, struct database *db);
 
-void NotSave(FILE *file, const struct database *db);
-
 #endif

@@ -247,12 +247,6 @@ void DB_Save(struct database *db) {
   printf(BOLD INF "База данных успешно записана в файл\n" RESET);
 }
 
-void DB_NotSave(struct database *db) {
-  NotSave(db->file, db);
-
-  printf(BOLD INF "База данных не изменена.\n");
-}
-
 void DB_SetFile(struct database *db, const char *file) {
   db->file = fopen(file, "wb");
 
