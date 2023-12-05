@@ -83,6 +83,8 @@ struct database *DB_Open(const char *file) {
 
   deserialize(f, db);
 
+  rename(".backup.db", file);
+
   fclose(f);
 
   db->file = fopen(file, "wb");
@@ -240,6 +242,8 @@ uint8_t DB_SortWithAttribute(struct database *db, uint8_t attr) {
 
   return DB_OK;
 }
+
+void DB_ResSave(const char *file) { rename(".backup.db", file); }
 
 void DB_Save(struct database *db) {
   serialize(db->file, db);

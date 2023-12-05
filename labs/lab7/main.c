@@ -219,7 +219,7 @@ int main() {
       goto exit;
     }
     case 8: {
-
+      DB_ReSave(filename);
       goto exit;
     }
     default:

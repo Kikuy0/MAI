@@ -25,12 +25,14 @@ int MaxValuePos(float arr[], int k) {
 
 int MinValuePos(float arr[], int k) {
   float ans = 10000000000;
+  int pos;
   for (int i = 0; i < k; ++i) {
     if (ans > arr[i]) {
       ans = arr[i];
+      pos = i;
     }
   }
-  return ans;
+  return pos;
 }
 
 float Task2(float arr[], int st, int end) {

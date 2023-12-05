@@ -89,6 +89,8 @@ uint8_t DB_SearchWithAttribute(struct database *db, uint8_t attr,
  */
 uint8_t DB_SortWithAttribute(struct database *db, uint8_t attr);
 
+void DB_ReSave(const char *file);
+
 /*
  * сохраняет текущее состояние базы данных и записывает его в файл
  */
