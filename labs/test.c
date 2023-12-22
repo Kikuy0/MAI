@@ -1,96 +1,95 @@
-#include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-#define pi 3.141592653589793
-
-int fac(int x) {
-  unsigned long long ans = 1;
-  for (int i = 1; i <= x; ++i) {
-    ans *= i;
+// Функция формирования файла
+void createFile(const char *filename) {
+  FILE *file = fopen(filename, "wb");
+  int k, size;
+  if (file == NULL) {
+    perror("Ошибка при создании файла");
+    return;
   }
-  return ans;
+  printf("Введите количество чисел:");
+  scanf("%i", &k);
+  int data[k];
+  printf("Введите %i чисел через пробел:", k);
+  for (int i = 0; i < k; ++i) {
+    scanf("%i", &data[i]);
+  }
+  size = (sizeof(data) / sizeof(int));
+  fwrite(data, sizeof(int), size, file);
+
+  fclose(file);
 }
 
-static double byAccuracy(float x, float acc) {
-  double ans = 0;
-  double xn = 1000;
-  for (int i = 0; xn >= acc; ++i) {
-    xn = pow((-1), i) * ((pow(x, 2 * i)) / fac(2 * i));
-    ans+=xn;
-    if(xn<0)xn=xn*(-1);
-  }
-  return ans;
-}   
+// Функция вывода результата
+void printResult(const char *filename, int evenCount, int oddCount) {
+  printf("Результат:\n");
+  printf("Количество четных чисел: %d\n", evenCount);
+  printf("Количество нечетных чисел: %d\n", oddCount);
 
-static double byQuantity(float x, int n) {
-  double ans = 0;
-  for (int i = 0; i < n; ++i) {
-    ans += pow((-1), i) * ((pow(x, 2 * i)) / fac(2 * i));
+  FILE *file = fopen(filename, "ab");
+  if (file == NULL) {
+    perror("Ошибка при открытии файла для добавления результатов");
+    return;
   }
-  return ans;
+
+  fwrite(&evenCount, sizeof(int), 1, file);
+  fwrite(&oddCount, sizeof(int), 1, file);
+
+  fclose(file);
+  printf("Результаты успешно записаны в файл.\n");
 }
 
-int main(void) {
-  int k, n , unit;
-  double x, acc;
-  printf("Chose:\n1.По числу членов;\n2.С заданной точностью\n");
-  scanf("%d", &k);
-  switch (k) {
-  case 1:
-    scanf("%lf%d", &x, &n);
-    if(x<0)x*=(-1);
-    unit = x / (2*pi);
-    x-=unit*(2*pi);
-    printf("x before %f \n",x);
-    if(x<=pi/2){
-        printf("%f \n",x);
-        printf("%f\n", byQuantity(x, n));
-    }
-    if(x>pi/2 && x < pi){
-        printf("%f \n",x);
-        printf("%f\n", (-1)*byQuantity(pi-x, n));
-    }
-    if(x>pi && x < 3*pi/2){
-        double offset = x - pi;
-        x = pi - offset;
-        printf("%f \n",x);
-        printf("%f\n", (-1)*byQuantity(pi-x, n));
-    }
-    if(x > 3*pi/2){
-        double offset = 2*pi-x;
-        x = offset;
-        printf("%f \n",x);
-        printf("%f\n", byQuantity(x, n));
-    }
-    break;
-  case 2:
-    scanf("%lf%lf", &x, &acc);
-    if(x<0)x*=(-1);
-    unit = x / (2*pi);
-    x-=unit*(2*pi);
-    printf("x before %f \n",x);
-    if(x<=pi/2){
-        printf("%f \n",x);
-        printf("%f\n", byAccuracy(x, acc));
-    }
-    if(x>pi/2 && x < pi){
-        printf("%f \n",x);
-        printf("%f\n", (-1)*byAccuracy(pi-x, acc));
-    }
-    if(x>pi && x < 3*pi/2){
-        double offset = x - pi;
-        x = pi - offset;
-        printf("%f \n",x);
-        printf("%f\n", byAccuracy(x, acc));
-    }
-    if(x > 3*pi/2){
-        double offset = 2*pi-x;
-        x = offset;
-        printf("%f \n",x);
-        printf("%f\n", byAccuracy(x, acc));
-    }
-    break;
+// Функция вычислительной части алгоритма
+void Task(const char *filename) {
+  FILE *file = fopen(filename, "rb");
+  if (file == NULL) {
+    perror("Ошибка при открытии файла");
+    return;
   }
 
+  int number;
+  int evenCount = 0, oddCount = 0;
+
+  while (fread(&number, sizeof(int), 1, file) == 1) {
+    if (number % 2 == 0) {
+      evenCount++;
+    } else {
+      oddCount++;
+    }
+  }
+
+  fclose(file);
+
+  printResult(filename, evenCount, oddCount);
+}
+
+// Функция для чтения целых чисел из бинарного файла
+void readIntegersFromFile(const char *filename) {
+  FILE *file = fopen(filename, "rb");
+  if (file == NULL) {
+    perror("Ошибка при открытии файла");
+    return;
+  }
+
+  int number;
+
+  printf("Содержимое файла %s:\n", filename);
+
+  while (fread(&number, sizeof(int), 1, file) == 1) {
+    printf("%d ", number);
+  }
+
+  printf("\n");
+
+  fclose(file);
+}
+
+int main() {
+  const char *filename = "f.bin";
+  createFile(filename);
+  Task(filename);
+  readIntegersFromFile(filename);
+
+  return 0;
 }

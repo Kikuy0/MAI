@@ -1,4 +1,5 @@
 // ВАРИАНТ - 9
+#include <ctype.h>
 #include <stdio.h>
 
 float Task1(float arr[], int k, float y) {
@@ -38,21 +39,30 @@ int MinValuePos(float arr[], int k) {
 float Task2(float arr[], int st, int end) {
   float ans, sum = 0;
   int count = 0;
-  for (int i = st; i < end; ++i) {
+  for (int i = st + 1; i < end; ++i) {
     sum += arr[i];
     count++;
-    // printf("%f %d \n", sum, count); - debug
+    // printf("%f %d \n", sum, count); //- debug
   }
   return sum / count;
 }
 
 int main() {
-  int k, x, y;
-  printf("Введите k, X, Y через пробел:");
-  scanf("%i %i %i", &k, &x, &y);
+  int k;
+  double y;
+  printf("Введите k(>1) и Y:");
+  scanf("%i%lf", &k, &y);
+  // if ((k < 2) || !isdigit(y)) {
+  //   printf("Неверный ввод\n");
+  //   return 0;
+  // }
+  printf("Введите %i чисел через пробел:\n", k);
   float arr[k];
   for (int i = 0; i < k; ++i) {
-    scanf("%f", &arr[i]);
+    if (scanf("%f", &arr[i]) != 1) {
+      printf("Неверный ввод\n");
+      return 0;
+    }
   }
   // for (int i = 0; i < k; ++i) {
   //   printf("%f\n", arr[i]); -- debug
@@ -65,7 +75,11 @@ int main() {
     st = MinValuePos(arr, k);
     end = MaxValuePos(arr, k);
   }
-  printf("Task 1 answer - %f\n", Task1(arr, k, y));
-  printf("Task 2 answer - %f\n", Task2(arr, st, end));
+  printf("Ответ на 1 задание - %f\n", Task1(arr, k, y));
+  if (end - st != 1) {
+    printf("Ответ на 2 задание - %f\n", Task2(arr, st, end));
+  } else {
+    printf("Ответ на 2 задание - такого элемента нет!\n");
+  }
   return 0;
 }

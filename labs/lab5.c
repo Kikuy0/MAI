@@ -14,19 +14,20 @@ void make_file() {
     exit(0);
   }
 
-  printf("Введите строки для заполнения файла. Введите '.' для остановки.\n");
+  printf(
+      "Введите строки для заполнения файла. Введите 'stop.' для остановки.\n");
 
   while (1) {
     fgets(input, 100, stdin);
 
-    if (strcmp(input, ".\n") == 0) {
+    if (strcmp(input, "stop.\n") == 0) {
       break;
     }
 
     fputs(input, file);
   }
 
-  printf("File %s has been created successfully.\n", "f.txt");
+  printf("File %s has been created successfully.\n", "g.txt");
 
   fclose(file);
 }
