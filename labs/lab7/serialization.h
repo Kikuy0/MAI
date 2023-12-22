@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#include "db.h"
+#include "database.h"
 
 /*
  * записывает поля структуры в файл

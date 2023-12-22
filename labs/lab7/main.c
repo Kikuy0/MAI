@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "db.h"
+#include "database.h"
 #include "text.h"
 
 struct database *db = NULL;
@@ -49,14 +49,14 @@ int main() {
     printf(BOLD "Введите имя файла: " RESET);
     read(buf, sizeof(buf), "%s", filename);
     strcat(filename, ".db");
-    db = DB_Create();
-    DB_SetFile(db, filename);
+    db = DataBase_Create();
+    DataBase_SetFile(db, filename);
     break;
   case 2:
     printf(BOLD "Введите имя файла: " RESET);
     read(buf, sizeof(buf), "%s", filename);
     strcat(filename, ".db");
-    db = DB_Open(filename);
+    db = DataBase_Open(filename);
     break;
   default:
     printf(ERR "Некорректный ввод\n" RESET);
@@ -70,16 +70,17 @@ int main() {
 
   while (1) {
     int i; // выбор пользователя
-    printf(BOLD "Выберите действие:" RESET "\n1. Добавить запись"
-                "\n2. Удалить запись"
-                "\n3. Найти запись"
-                "\n4. Редактировать запись"
-                "\n5. Сортировать базу данных"
-                "\n6. Вывести содержимое базы данных"
-                "\n"
-                "\n7. Сохранить данные и выйти" FG_RED "\n8. Выйти без "
-                "сохранения" RESET "\n--->"
-                " ");
+    printf("Выберите действие:" RESET "\n1. Добавить запись"
+           "\n2. Удалить запись"
+           "\n3. Найти запись"
+           "\n4. Редактировать запись"
+           "\n5. Сортировать базу данных"
+           "\n6. Вывести содержимое базы данных"
+           "\n"
+           "\n7. Сохранить данные и выйти"
+           "\n8. Выйти без "
+           "сохранения" RESET "\n--->"
+           " ");
     read(buf, sizeof(buf), "%i", &i);
 
     switch (i) {
@@ -104,7 +105,7 @@ int main() {
       printf("Объем поставляемой продукции в рублях:");
       read(buf, sizeof(buf), "%lu", &v);
 
-      DB_InsertRow(db, n, c, a, m, v);
+      DataBase_InsertRow(db, n, c, a, m, v);
 
       break;
     }
@@ -113,7 +114,7 @@ int main() {
       int i;
       read(buf, sizeof(buf), "%i", &i);
 
-      DB_RemoveRow(db, i);
+      DataBase_RemoveRow(db, i);
 
       break;
     }
@@ -129,31 +130,31 @@ int main() {
         printf("Введите название:");
         readString(value, 64);
 
-        DB_SearchWithAttribute(db, DB_ATTR_NAME, value);
+        DataBase_SearchWithAttribute(db, DB_ATTR_NAME, value);
       } else if (strcmp(attr, "описание") == 0) {
         char value[64];
         printf("Введите описание товара: ");
         readString(value, 64);
 
-        DB_SearchWithAttribute(db, DB_ATTR_DESCRIPTION, value);
+        DataBase_SearchWithAttribute(db, DB_ATTR_DESCRIPTION, value);
       } else if (strcmp(attr, "страна") == 0) {
         char value[64];
         printf("Введите страну: ");
         readString(value, 64);
 
-        DB_SearchWithAttribute(db, DB_ATTR_COUNTRY, value);
+        DataBase_SearchWithAttribute(db, DB_ATTR_COUNTRY, value);
       } else if (strcmp(attr, "куда экспортируется товар") == 0) {
         char value[64];
         printf("Введите куда экспортируется товар: ");
         readString(value, 64);
 
-        DB_SearchWithAttribute(db, DB_ATTR_EXPORTC, value);
+        DataBase_SearchWithAttribute(db, DB_ATTR_EXPORTC, value);
       } else if (strcmp(attr, "объем поставляемой продукции в рублях") == 0) {
         unsigned long int g;
         printf("Введите объем поставляемой продукции в рублях: ");
         read(buf, sizeof(buf), "%lu", &g);
 
-        DB_SearchWithAttribute(db, DB_ATTR_VOLUME, &g);
+        DataBase_SearchWithAttribute(db, DB_ATTR_VOLUME, &g);
       } else {
         printf(ERR "Повторите ввод!" RESET);
       }
@@ -184,7 +185,7 @@ int main() {
       printf("Объем поставленной продукции в рублях: ");
       read(buf, sizeof(buf), "%lu", &v);
 
-      DB_EditRow(db, i, n, c, a, m, v);
+      DataBase_EditRow(db, i, n, c, a, m, v);
 
       break;
     }
@@ -196,30 +197,30 @@ int main() {
       readString(attr, 16);
 
       if (strcmp(attr, "название товара") == 0) {
-        DB_SortWithAttribute(db, DB_ATTR_NAME);
+        DataBase_SortWithAttribute(db, DB_ATTR_NAME);
       } else if (strcmp(attr, "описание") == 0) {
-        DB_SortWithAttribute(db, DB_ATTR_DESCRIPTION);
+        DataBase_SortWithAttribute(db, DB_ATTR_DESCRIPTION);
       } else if (strcmp(attr, "страна") == 0) {
-        DB_SortWithAttribute(db, DB_ATTR_COUNTRY);
+        DataBase_SortWithAttribute(db, DB_ATTR_COUNTRY);
       } else if (strcmp(attr, "куда экспортируется") == 0) {
-        DB_SortWithAttribute(db, DB_ATTR_EXPORTC);
+        DataBase_SortWithAttribute(db, DB_ATTR_EXPORTC);
       } else if (strcmp(attr, "объем поставляемой продукции в рублях") == 0) {
-        DB_SortWithAttribute(db, DB_ATTR_VOLUME);
+        DataBase_SortWithAttribute(db, DB_ATTR_VOLUME);
       } else {
         printf(ERR "Повторите ввод!" RESET);
       }
       break;
     }
     case 6: {
-      DB_Print(db);
+      DataBase_Print(db);
       break;
     }
     case 7: {
-      DB_Save(db);
+      DataBase_Save(db);
       goto exit;
     }
     case 8: {
-      DB_ReSave(filename);
+      DataBase_ReSave(filename);
       goto exit;
     }
     default:
@@ -229,6 +230,6 @@ int main() {
   }
 
 exit:
-  DB_Close(db);
+  DataBase_Close(db);
   return 0;
 }
