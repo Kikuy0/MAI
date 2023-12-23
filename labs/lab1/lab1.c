@@ -1,6 +1,7 @@
 // ВАРИАНТ - 9
 #include <ctype.h>
 #include <math.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -45,11 +46,11 @@ int main(void) {
   }
   switch (k) {
   case 1:
-    printf("Введите X и число членов через пробел:");
+    printf("Введите X и число членов(n > 1) через пробел:");
     err = scanf("%lf%d", &x, &n);
     // printf("x - %lf  n - %d\n", x, n); // debug
     // fflush(stdin);
-    if (!isdigit(n)) {
+    if ((n < 1) || (err < 2)) {
       printf("Неверный ввод\n");
       return 0;
     }
@@ -81,14 +82,13 @@ int main(void) {
     }
     break;
   case 2:
-    printf("Введите X и точность(чем ниже указанная точность,тем дальше ответ "
-           "от истинны) через пробел:");
+    printf("Введите X и точность (0 < accuracy < 1) через пробел:");
     err = scanf("%lf%lf", &x, &acc);
     // fflush(stdin);
-    // if (err != 1) {
-    //   printf("Неверный ввод\n");
-    //   return 0;
-    // }
+    if (err != 2 || (acc > 1) || (acc < 0)) {
+      printf("Неверный ввод\n");
+      return 0;
+    }
     if (x < 0)
       x *= (-1);
     unit = x / (2 * pi);

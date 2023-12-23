@@ -48,14 +48,14 @@ float Task2(float arr[], int st, int end) {
 }
 
 int main() {
-  int k;
+  int k, err;
   double y;
   printf("Введите k(>1) и Y:");
-  scanf("%i%lf", &k, &y);
-  // if ((k < 2) || !isdigit(y)) {
-  //   printf("Неверный ввод\n");
-  //   return 0;
-  // }
+  err = scanf("%i%lf", &k, &y);
+  if ((k < 2) || (err != 2)) {
+    printf("Неверный ввод\n");
+    return 0;
+  }
   printf("Введите %i чисел через пробел:\n", k);
   float arr[k];
   for (int i = 0; i < k; ++i) {

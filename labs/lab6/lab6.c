@@ -4,17 +4,25 @@
 // Функция формирования файла
 void createFile(const char *filename) {
   FILE *file = fopen(filename, "wb");
-  int k, size;
+  int k, size, err;
   if (file == NULL) {
-    perror("Ошибка при создании файла");
+    printf("Ошибка при создании файла\n");
     return;
   }
   printf("Введите количество чисел:");
-  scanf("%i", &k);
+  err = scanf("%i", &k);
+  if (err != 1) {
+    printf("Ошибка ввода.\n");
+    return;
+  }
   int data[k];
   printf("Введите %i чисел через пробел:", k);
   for (int i = 0; i < k; ++i) {
-    scanf("%i", &data[i]);
+    err = scanf("%i", &data[i]);
+    if (err != 1) {
+      printf("Ошибка ввода\n");
+      return;
+    }
   }
   size = (sizeof(data) / sizeof(int));
   fwrite(data, sizeof(int), size, file);
@@ -34,8 +42,10 @@ void printResult(const char *filename, int evenCount, int oddCount) {
     return;
   }
 
-  fwrite(&evenCount, sizeof(int), 1, file);
-  fwrite(&oddCount, sizeof(int), 1, file);
+  fwrite(&evenCount, sizeof(int), 1,
+         file); // Записывает четные числа в конец файла
+  fwrite(&oddCount, sizeof(int), 1,
+         file); // Записывает нечетные числа в конец файла
 
   fclose(file);
   printf("Результаты успешно записаны в файл.\n");
@@ -88,9 +98,9 @@ void readIntegersFromFile(const char *filename) {
 
 int main() {
   const char *filename = "f.bin";
-  createFile(filename);
-  Task(filename);
-  readIntegersFromFile(filename);
+  createFile(filename);           // функция создания
+  Task(filename);                 // выполнение задания
+  readIntegersFromFile(filename); // читает целые числа из файла
 
   return 0;
 }

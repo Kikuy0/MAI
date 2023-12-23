@@ -1,3 +1,4 @@
+// ВАРИАНТ - 9
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,10 +8,10 @@ void make_file() {
   FILE *file;
   char input[100];
 
-  file = fopen("f.txt", "w");
+  file = fopen("f.txt", "w"); // открытие файла
 
   if (file == NULL) {
-    printf("Could not create file %s\n", "f.txt");
+    printf("Не получилось открыть файл %s\n", "f.txt");
     exit(0);
   }
 
@@ -18,34 +19,34 @@ void make_file() {
       "Введите строки для заполнения файла. Введите 'stop.' для остановки.\n");
 
   while (1) {
-    fgets(input, 100, stdin);
+    fgets(input, 100, stdin); // получение строки.
 
-    if (strcmp(input, "stop.\n") == 0) {
+    if (strcmp(input, "stop.\n") == 0) { // сравнение строки
       break;
     }
 
-    fputs(input, file);
+    fputs(input, file); // записывает содержимое input в файл
   }
 
-  printf("File %s has been created successfully.\n", "g.txt");
+  printf("Файл %s создан успешно.\n", "g.txt");
 
-  fclose(file);
+  fclose(file); // закрыть файл
 }
 
-int Task() {
+int Task() { // функция выполнения задания
   FILE *f, *g;
   char ch, save;
   f = fopen("f.txt", "r");
   g = fopen("g.txt", "w");
 
   if (f == NULL || g == NULL) {
-    printf("Error: Could not open the files.\n");
+    printf("Ошибка: Не получилось открыть файл.\n");
     return 1;
   }
 
   while ((ch = fgetc(f)) != EOF) {
-    if (isdigit(ch)) {
-      fputc(save, g);
+    if (isdigit(ch)) { // проверка что символ является числом
+      fputc(save, g); // запись символа
     }
     save = ch;
   }
